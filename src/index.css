@@ -1,0 +1,58 @@
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body{
+  font-family: 'Arial';
+  padding: 15px;
+
+}
+
+.signupdiv{
+  border: 1px solid #969595;
+  border-radius: 10px;
+  display: inline-block;
+  padding: 40px;
+  margin-top: 40px;
+  margin-left: 40px;
+}
+
+.pas{
+  margin-top: 20px;
+}
+
+input{
+  font-size: 18px;
+  padding: 10px;
+  outline: none;
+  margin: 5px 0;
+  border-radius: 7px;
+  outline: none;
+  border: 1px solid #969595;
+}
+
+button {
+  cursor: pointer;
+  background: #7044eb;
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 7px;
+  font-size: 20px;
+  margin-top: 20px
+}
+
+.dbdiv {
+  padding: 20px;
+  margin-left: 20px;
+}
+
+.dbdiv > button {
+  width: 150px;
+  font-size: 15px;
+  padding: 10px 0px;
+  margin-top: 5px;
+}
