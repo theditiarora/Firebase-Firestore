@@ -2,39 +2,22 @@ import { useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import { db } from "./firebase";
-import { collection, addDoc, getDocs } from "firebase/firestore"; 
+import { collection, setDoc, doc, getDocs } from "firebase/firestore"; 
 
 const App = () => {
 
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
-  const [user, setUser] = useState({})
+  const [userr, setUser] = useState({})
 
   const [name, setName] = useState("")
 
-// sign up
-  const handleSubmit = async () => {
-
-   try {
-    const user =  await createUserWithEmailAndPassword(auth, email, password)
-    console.log(user);
-   }
-    catch(error) {
-    console.log(error.message);
-   }
-   
-  } 
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser)
-    })
-  }, [user])
-
-  const sendData = async () => {
+  
+  const addDoc = async (du) => {
+    // console.log(userr);
     try {
-      const docRef = await addDoc(collection(db, "users"), {
-        name: name,
+      const docRef = await setDoc(doc(db, "users", du), {
+        email: email,
       });
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
@@ -42,12 +25,27 @@ const App = () => {
     }
   }
 
-  // const getData = async () => {
-  //   const querySnapshot = await getDocs(collection(db, "users"));
-  //     querySnapshot.forEach((doc) => {
-  //       console.log(`${doc.id} => ${doc.data()}`);
-  //     });
-  // }
+// sign up
+  const handleSubmit = async () => {
+
+   try {
+    const user =  await createUserWithEmailAndPassword(auth, email, password)
+    setUser(user)
+    addDoc(user.user.uid)
+  }
+  catch(error) {
+    console.log(error.message);
+  }
+  
+} 
+
+useEffect(() => {
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser)
+    console.log(userr);
+  })
+  }, [userr])
+
 
   return (
     <>
@@ -63,11 +61,13 @@ const App = () => {
       </div>
 
       <div className="dbdiv">
-        <input placeholder="Name" value={name} onChange={e => setName(e.target.value)}  type="text"/> <br />
-        <button onClick={sendData}>Send data</button>
+        {/* <input placeholder="Name" value={name} onChange={e => setName(e.target.value)}  type="text"/> <br /> */}
+        <button>retrieve data</button>
       </div>
     </>
   );
 };
 
 export default App;
+
+// 
