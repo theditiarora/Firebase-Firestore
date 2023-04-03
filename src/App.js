@@ -14,15 +14,15 @@ const App = () => {
   const [data, setData] = useState([]);
   const [inp, setInp] = useState();
 
-  const getData = async () => {
-      await getDocs(collection(db, "users", userr.uid)).then((querySnapshot) => {
-        querySnapshot.forEach((element) => {
-          var dataa = element.data();
-          setData([dataa, ...data]);
-          console.log(data);
-        });
-      });
-  };
+  // const getData = async () => {
+  //     await getDocs(collection(db, "users", userr.uid)).then((querySnapshot) => {
+  //       querySnapshot.forEach((element) => {
+  //         var dataa = element.data();
+  //         setData([dataa, ...data]);
+  //         console.log(data);
+  //       });
+  //     });
+  // };
 
   const addDoc = async (du) => {
     try {
@@ -40,7 +40,7 @@ const App = () => {
     try {
       const user = await createUserWithEmailAndPassword(auth, email, password);
       setUser(user.user);
-      addDoc(userr.uid);
+      addDoc(user.user.uid);
     } catch (error) {
       console.log(error.message);
     }
@@ -82,7 +82,7 @@ const App = () => {
           type="text"
         /> */}
         <br />
-        <button onClick={getData}>retrieve data</button>
+        {/* <button onClick={getData}>retrieve data</button> */}
 
       </div>
     </>
