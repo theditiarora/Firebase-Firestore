@@ -5,7 +5,7 @@ import {
 } from "firebase/auth";
 import { auth } from "./firebase";
 import { db } from "./firebase";
-import { collection, setDoc, doc, getDocs } from "firebase/firestore";
+import { collection, setDoc, query, doc, getDoc } from "firebase/firestore";
 
 const App = () => {
   const [email, setEmail] = useState();
@@ -29,7 +29,7 @@ const App = () => {
       const docRef = await setDoc(doc(db, "users", du), {
         email: email,
       });
-      console.log("Document written with ID: ", docRef.id);
+      console.log("Document written with ID: ", du);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -45,6 +45,28 @@ const App = () => {
       console.log(error.message);
     }
   };
+  const getData = async e  => {
+    // const q = query(collection(db, "users"))
+    // const querySnapshot = await getDocs(q);
+
+    // querySnapshot.forEach((doc) => {
+      // const hi = [ doc.data()]
+      // console.log(hi.filter(useremail => doc.d));
+      // console.log(doc.data());
+    // });
+
+    const docRef = doc(db, "users", userr.uid);
+
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        setData(docSnap.data())
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+   console.log(data);
+  }
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
@@ -75,15 +97,9 @@ const App = () => {
       </div>
 
       <div className="dbdiv">
-        {/* <input
-          value={inp}
-          onChange={(e) => setInp(e.target.value)}
-          placeholder="Email"
-          type="text"
-        /> */}
         <br />
-        {/* <button onClick={getData}>retrieve data</button> */}
-
+        <button onClick={getData}>retrieve data</button>
+        <pre>{data ? data.email : null}</pre>
       </div>
     </>
   );
